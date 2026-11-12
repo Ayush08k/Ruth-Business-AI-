@@ -1,72 +1,118 @@
-# ⚡ RUTH — Autonomous AI Business Assistant & Jarvis System
+# 🚀 Let's Create Something Together!
 
-> **A 100% private, local voice-first AI executive assistant designed to manage business workflows, automate Windows PC tasks, answer website inquiries, and deliver scheduled reports.**
+> **Looking to build hands-on AI engineering experience, level up your resume with a real-world Jarvis project, or contribute to an open-source autonomous business assistant? You're in the right place!**
+>
+> Feel free to **Fork**, **Clone**, test new features, open a **Pull Request**, and collaborate. High-quality PRs will be reviewed and merged promptly. Use this project to showcase practical applied AI, local LLM orchestration, desktop automation, and RAG pipelines on your resume or portfolio.
+>
+> 🔗 **GitHub Repository:** [https://github.com/Ayush08k/Ruth-Business-AI-.git](https://github.com/Ayush08k/Ruth-Business-AI-.git)
+
+---
+
+# ⚡ RUTH — Autonomous AI Business Assistant & Executive Automation Engine
 
 [![Python Version](https://img.shields.io/badge/Python-3.11+-blue.svg)](https://www.python.org/)
 [![Local Engine](https://img.shields.io/badge/Local%20AI-Ollama%20%7C%20Llama%203.2-orange.svg)](https://ollama.com/)
 [![Voice](https://img.shields.io/badge/TTS-Edge--TTS%20(Ultra--Soft)-purple.svg)](https://github.com/rany2/edge-tts)
-[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
-[![Cost](https://img.shields.io/badge/Operating%20Cost-%240%2Fmonth-brightgreen.svg)]()
+[![Contributions Welcome](https://img.shields.io/badge/Contributions-Welcome-brightgreen.svg)](https://github.com/Ayush08k/Ruth-Business-AI-/pulls)
+[![Operating Cost](https://img.shields.io/badge/Operating%20Cost-%240%2Fmonth%20(100%25%20Local)-brightgreen.svg)]()
+
+**Ruth** is an autonomous, voice-driven AI business assistant engineered to automate daily operations, manage communications, execute Windows PC actions, answer business domain questions, and provide automated scheduled briefings — with **zero cloud subscription costs ($0/mo)** and **100% data privacy**.
 
 ---
 
-## 🌟 Overview
+## 🛠️ How It Works (System Architecture)
 
-**Ruth** is a customizable, offline-capable AI business assistant inspired by Tony Stark's J.A.R.V.I.S. Rather than relying on rigid if/else statements or cloud APIs that leak business data, Ruth runs **entirely on your local machine** using `llama3.2:1b` (via Ollama) and a ChromaDB vector database.
+Ruth combines a local Large Language Model, persistent vector retrieval, and native operating system hooks to function as an end-to-end executive assistant:
 
-She strictly knows **your business data** (ingested from [freelanceayush.com](https://freelanceayush.com) and your documents) and executes full Windows operating system tasks via voice or text commands.
+```
+                  ┌───────────────────────────────┐
+                  │   🎙️ Voice / Text Input       │
+                  │   ("Hey Ruth" Wake-Word / CLI)│
+                  └───────────────┬───────────────┘
+                                  │
+                                  ▼
+                  ┌───────────────────────────────┐
+                  │ 👂 Whisper STT (Bilingual)    │
+                  │ (Auto-detects English / Hindi)│
+                  └───────────────┬───────────────┘
+                                  │
+                                  ▼
+                  ┌───────────────────────────────┐
+                  │ 🧠 Ruth Custom Decision Brain │
+                  │  (Llama 3.2:1b via Ollama)    │
+                  └───────┬───────────────┬───────┘
+                          │               │
+       Direct OS Actions  │               │ Business Queries
+                          ▼               ▼
+     ┌─────────────────────────┐     ┌─────────────────────────┐
+     │ 🖥️ Windows Automation   │     │ 🗂️ Local Memory & RAG   │
+     │  - Launch Applications  │     │  - ChromaDB Vector Store│
+     │  - Web / YouTube Search │     │  - SQLite Interaction DB│
+     │  - Typing & Hotkeys     │     │  - Crawled Business Data│
+     │  - Media / Volume Ctrl  │     └────────────┬────────────┘
+     └────────────┬────────────┘                  │
+                  │                               │
+                  └───────────────┬───────────────┘
+                                  │
+                                  ▼
+                  ┌───────────────────────────────┐
+                  │ 🔊 Ultra-Soft Female TTS      │
+                  │ (Edge-TTS Emma / Swara Neural)│
+                  └───────────────────────────────┘
+```
+
+1. **Voice Capture & Transcription**: Listens continuously for wake triggers (*"Hey Ruth"*, *"Ruth"*, *"रूथ"*). Uses OpenAI Whisper locally to parse commands in real time.
+2. **Context & Semantic Retrieval**: Searches your private ChromaDB vector embeddings for matched business facts, pricing, catalogs, and policies. If a query is outside your company's data, Ruth strictly refuses to hallucinate false information.
+3. **Execution Engine**: Directs system-level commands to native Windows automation scripts (`pyautogui`, `pywinauto`, `webbrowser`, `subprocess`) to open software, type, or browse the web.
+4. **Natural Acoustic Voice**: Generates calm, human-like voice responses via calibrated acoustic models (`-5Hz` pitch, `-15%` volume, relaxed pace).
 
 ---
 
-## 🚀 Key Features
+## ✨ Key Features
 
-### 1. 🧠 Strict Business & Website RAG (No Hallucinations)
-- **Zero general-trivia spam**: Ruth refuses to answer random trivia questions outside your domain.
-- **Trained on your real website**: Scrapes and indexes your portfolio, projects, services, blog posts, and rates.
-- **Local vector memory**: Uses ChromaDB and Sentence-Transformers on disk to store interactions and documents forever.
+### 🏢 1. Made to Automate Business Workflows
+- **Knowledge Ingestion Pipeline**: Ingest any business website URL, customer FAQ, or product catalog into vector memory with a single command.
+- **Strict Domain Bounds**: Ruth is configured to speak only on your business data — preventing awkward AI hallucinations with clients.
+- **Email Categorization & Briefings**: Reads, summarizes, and classifies incoming emails and prepares morning executive briefings.
 
-### 2. 💻 Full Windows Desktop & PC Automation
-Command Ruth to take direct action on your PC:
-- **Launch Any App**: `"open Chrome"`, `"open Calculator"`, `"open Notepad"`, `"open VS Code"`, `"open Spotify"`.
-- **Web Navigation**: `"search on Google Next.js performance"`, `"search on YouTube lo-fi beats"`.
-- **Keyboard & Mouse Control**: `"type [text]"`, `"press enter"`, `"close active window"`, `"click"`.
-- **Hardware & Media**: `"volume up"`, `"volume down"`, `"mute"`, `"take screenshot"`.
+### 💻 2. Full Windows PC Automation
+Control your entire computer completely hands-free:
+- **Application Launcher**: Open any software (*"open Chrome"*, *"open Calculator"*, *"open VS Code"*, *"open Notepad"*, *"open Spotify"*).
+- **Web & Video Search**: Instantly searches Google or YouTube (*"search on Google Next.js performance"*, *"search on YouTube deep focus music"*).
+- **Keyboard & Mouse Automation**: Dictate text (*"type [message]"*), press key combinations (*"press enter"*, *"close active window"*), and take screenshots.
+- **System Controls**: Adjust or mute system volume, pause/play background media.
 
-### 3. 🎙️ Continuous Voice I/O (Bilingual + Ultra-Soft Voice)
-- **Always-on Wake-Word**: Listens for *"Hey Ruth"*, *"Ruth"*, or Hindi *"रूथ"*.
-- **Speech-to-Text (STT)**: Offline Whisper model with automatic English/Hindi language detection.
-- **Text-to-Speech (TTS)**: Ultra-soft, gentle female voice (`en-US-EmmaMultilingualNeural` / `hi-IN-SwaraNeural`) with calibrated warm acoustic pitch (`-5Hz`), unhurried cadence (`-7%`), and gentle volume (`-15%`).
+### 🎙️ 3. Bilingual Voice & Calibrated Persona
+- Speaks in **English** and **Hindi**.
+- Tuned for an ultra-soft, warm, unhurried female voice (`en-US-EmmaMultilingualNeural` / `hi-IN-SwaraNeural`) that sounds conversational and non-intrusive.
 
-### 4. 📧 Automated Reporting & Email Management
-- Reads and categorizes incoming unread emails via OAuth2.
-- Generates morning voice briefings and structured HTML email reports summarizing website uptime, task queues, and email notifications.
-
-### 5. ⚡ 4GB RAM & $0/Month Friendly
-- Specifically engineered to run smoothly on machines with **4GB RAM** on CPU.
-- **Zero cloud API subscriptions** — runs 100% free forever.
+### 🔒 4. 100% Private, Local & $0/Month
+- Runs completely on your PC using **`llama3.2:1b`** via Ollama.
+- Engineered specifically to run within **4GB RAM** on CPU.
+- **Zero API keys required**, no subscription fees, and no client data ever leaves your computer.
 
 ---
 
-## 📁 Architecture & File Structure
+## 📁 Repository Structure
 
 ```text
-d:\Ruth\
-├── run_ruth.py               # Main launcher (Voice or Keyboard modes)
+Ruth-Business-AI-/
+├── run_ruth.py               # Main assistant execution script
 ├── LAUNCH_RUTH.bat           # 1-Click interactive launcher for Windows
-├── START_RUTH.bat            # Alternative launcher menu
-├── pull_model.py             # Script to pull local Llama model via Ollama
+├── START_RUTH.bat            # Quick command-line launcher
+├── pull_model.py             # Pulls local Llama model via Ollama API
 ├── setup.py                  # One-click dependency installer
-├── requirements.txt          # Python packages
-├── .env                      # Local configuration (never pushed)
-├── .env.example              # Environment variables template
-├── .gitignore                # Protects local DBs, logs, and audio caches
+├── setup_model.py            # Local model configurator
+├── requirements.txt          # Python package requirements
+├── .env.example              # Sample environment configuration
+├── .gitignore                # Protects local DBs, memory, and logs
 └── ruth/
-    ├── config.py             # System configuration loader
+    ├── config.py             # Central configuration loader
     ├── agent/
-    │   └── brain.py          # Strict RAG decision engine, prompt & tools router
+    │   └── brain.py          # Strict RAG decision engine & tool router
     ├── voice/
-    │   ├── listener.py       # Whisper STT & wake-word detection engine
-    │   └── speaker.py        # Edge-TTS soft female speech output
+    │   ├── listener.py       # Whisper speech-to-text & wake-word engine
+    │   └── speaker.py        # Ultra-soft female voice synthesizer
     ├── tools/
     │   ├── pc_control.py     # OS automation (apps, keyboard, mouse, media)
     │   └── tools.py          # Unified tool registry
@@ -83,85 +129,80 @@ d:\Ruth\
 
 ---
 
-## 🛠️ Quick Installation
+## ⚡ Quick Start Guide
 
-### Prerequisites
-1. **Windows 10/11**
-2. **Python 3.11+** installed and added to `PATH`.
-3. **Ollama for Windows**: Download from [ollama.com/download](https://ollama.com/download).
+### 1. Prerequisites
+- **Windows 10/11**
+- **Python 3.11+** installed and added to `PATH`
+- **Ollama for Windows** installed from [ollama.com/download](https://ollama.com/download)
 
-### Step 1: Clone Repository
+### 2. Clone the Repository
 ```powershell
 git clone https://github.com/Ayush08k/Ruth-Business-AI-.git
 cd Ruth-Business-AI-
 ```
 
-### Step 2: Install Dependencies
+### 3. Install Dependencies
 ```powershell
 python setup.py
 ```
 
-### Step 3: Pull Local AI Engine
-Make sure Ollama is running (`ollama serve`), then pull the lightweight model:
+### 4. Pull the Local Model
+Ensure Ollama is running (`ollama serve`), then run:
 ```powershell
 ollama pull llama3.2:1b
 ```
 
----
+### 5. Start Ruth
+Double-click **`LAUNCH_RUTH.bat`** or run:
 
-## 🎯 How to Use
-
-### 1. Launch Ruth
-Simply double-click **`LAUNCH_RUTH.bat`** or run in your terminal:
-
-- **Voice Assistant Mode (Full Jarvis Experience):**
+- **Voice Mode (Full Jarvis experience):**
   ```powershell
   python run_ruth.py
   ```
-  *Say "Hey Ruth, what services does Ayush offer?" or "Hey Ruth, open Chrome".*
-
-- **Console / Text Mode (Test without Microphone):**
+- **Text / CLI Mode (Type commands without mic):**
   ```powershell
   python run_ruth.py --text
   ```
 
-### 2. Train Ruth on Additional Documents / Sites
+---
+
+## 📚 Training Ruth on Your Business
+
+Feed your company's documents, website, or policies into Ruth:
+
 ```powershell
 python run_ruth.py --train
 ```
-- **Option 4**: Crawl and ingest any website URL into vector memory.
-- **Option 2**: Add targeted Q&A pairs (e.g. pricing, policies).
-- **Option 1**: Upload `.pdf`, `.docx`, `.txt` business documentation.
+
+- **Option 4**: Crawl and ingest any business website URL into vector memory.
+- **Option 2**: Add targeted Q&A pairs (e.g. pricing, refund rules, client onboarding steps).
+- **Option 1**: Upload `.pdf`, `.docx`, or `.txt` documentation.
 
 ---
 
-## 🗣️ Example Commands
+## 🤝 Contributing & Pull Requests
 
-| Command | Action |
-|---|---|
-| *"Ruth, what services does Ayush offer?"* | Answers strictly from `freelanceayush.com` data |
-| *"Ruth, tell me about the Starbucks 3D project"* | Details your project portfolio |
-| *"Ruth, open Calculator"* | Launches Windows Calculator |
-| *"Ruth, search on Google Next.js performance"* | Opens browser and searches Google |
-| *"Ruth, search on YouTube lo-fi music"* | Opens YouTube with query results |
-| *"Ruth, type Hello from Ruth AI"* | Types text into active window |
-| *"Ruth, volume up / down / mute"* | Controls system volume |
-| *"Ruth, check my website status"* | Checks `freelanceayush.com` uptime |
-| *"Ruth, kya kaam pending hai?"* | Lists task queue in Hindi |
+We want this to be the best open-source local AI assistant available! Whether you're fixing a bug, adding new PC automation features, optimizing prompts, or improving voice responsiveness:
 
----
+1. **Fork the Repository**
+2. **Create a Feature Branch**:
+   ```bash
+   git checkout -b feature/AmazingNewFeature
+   ```
+3. **Commit Your Changes**:
+   ```bash
+   git commit -m "feat: add AmazingNewFeature to Ruth"
+   ```
+4. **Push to the Branch**:
+   ```bash
+   git push origin feature/AmazingNewFeature
+   ```
+5. **Open a Pull Request**: Submit your PR on GitHub, detail your improvements, and it will be reviewed and merged!
 
-## 🛡️ Privacy & Security
-
-- All vector embeddings and conversation histories remain strictly on your local disk in `ruth_data/`.
-- No customer conversations, queries, or screen interactions are uploaded to any external cloud API or third-party server.
-
----
-
-## 👤 Author
-**Ayush**
-- Website: [freelanceayush.com](https://freelanceayush.com)
-- GitHub: [@Ayush08k](https://github.com/Ayush08k)
+Add this project to your portfolio or resume to demonstrate practical proficiency with **Applied AI, Local LLM Inference, LangChain, Vector Databases (ChromaDB), and Windows OS Automation**.
 
 ---
-*Built with Python, LangGraph, Ollama, Whisper, and Edge-TTS.*
+
+## 📄 License
+Distributed under the **MIT License**. See `LICENSE` for more information.
