@@ -1,0 +1,13 @@
+# Ruth Data & Models (Local only - do not push to public repo)
+ruth_data/
+logs/
+*.mp3
+*.wav
+*.png
+.env
+__pycache__/
+*/__pycache__/
+*/*/__pycache__/
+*.pyc
+credentials.json
+token.json

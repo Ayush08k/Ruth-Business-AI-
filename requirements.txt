@@ -1,0 +1,52 @@
+# Ruth AI Assistant - Requirements
+# Core LLM & Agent
+google-generativeai>=0.8.0
+langchain>=0.3.0
+langchain-google-genai>=2.0.0
+langgraph>=0.2.0
+langchain-community>=0.3.0
+
+# Voice - Speech to Text
+openai-whisper>=20231117
+sounddevice>=0.4.6
+numpy>=1.24.0
+scipy>=1.11.0
+
+# Voice - Text to Speech
+edge-tts>=6.1.9
+pygame>=2.5.0
+
+# Wake Word Detection
+pvporcupine>=3.0.0
+
+# Memory & Storage
+chromadb>=0.5.0
+sentence-transformers>=3.0.0
+
+# Email Integration
+google-auth>=2.23.0
+google-auth-oauthlib>=1.1.0
+google-auth-httplib2>=0.1.1
+google-api-python-client>=2.100.0
+
+# Web / API
+fastapi>=0.110.0
+uvicorn>=0.27.0
+httpx>=0.26.0
+beautifulsoup4>=4.12.0
+requests>=2.31.0
+
+# Utilities
+python-dotenv>=1.0.0
+schedule>=1.2.0
+langdetect>=1.0.9
+rich>=13.7.0
+pydantic>=2.5.0
+aiofiles>=23.2.1
+python-dateutil>=2.8.2
+colorama>=0.4.6
+
+# Audio processing
+soundfile>=0.12.1
+pyaudio>=0.2.14
+
