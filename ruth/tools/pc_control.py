@@ -53,24 +53,36 @@ class SystemController:
         try:
             if clean in ["chrome", "google chrome"]:
                 subprocess.Popen(["start", "chrome"], shell=True)
+                return "Opening Chrome."
             elif clean in ["edge", "browser"]:
                 subprocess.Popen(["start", "msedge"], shell=True)
+                return "Opening browser."
+            elif clean in ["whatsapp", "whatsapp desktop"]:
+                subprocess.Popen(["start", "whatsapp:"], shell=True)
+                return "Opening WhatsApp."
+            elif clean in ["settings", "windows settings"]:
+                subprocess.Popen(["start", "ms-settings:"], shell=True)
+                return "Opening Windows Settings."
             elif cmd.startswith("start "):
                 subprocess.Popen(cmd, shell=True)
+                return f"Opening {app_name}."
             else:
-                subprocess.Popen(cmd, shell=True)
+                subprocess.Popen(f'start "" "{cmd}"', shell=True)
+                return f"Opening {app_name}."
+        except Exception:
+            pass
+
+        # Universal fallback: search Windows Start Menu and launch
+        try:
+            pyautogui.press("win")
+            time.sleep(0.3)
+            pyperclip.copy(app_name)
+            pyautogui.hotkey("ctrl", "v")
+            time.sleep(0.5)
+            pyautogui.press("enter")
             return f"Opening {app_name}."
-        except Exception as e:
-            # Fallback to Windows Start Menu search
-            try:
-                pyautogui.press("win")
-                time.sleep(0.3)
-                pyautogui.write(app_name, interval=0.05)
-                time.sleep(0.5)
-                pyautogui.press("enter")
-                return f"Searched and launched {app_name} via Windows Start."
-            except Exception as ex:
-                return f"Could not open {app_name}: {ex}"
+        except Exception as ex:
+            return f"Could not open {app_name}: {ex}"
 
     @staticmethod
     def close_current_window() -> str:
@@ -121,13 +133,44 @@ class SystemController:
 
     @staticmethod
     def click_mouse(x: int = None, y: int = None, clicks: int = 1, button: str = "left") -> str:
-        """Click at current or specified coordinate"""
-        if x is not None and y is not None:
-            pyautogui.click(x=x, y=y, clicks=clicks, button=button)
-            return f"Clicked at coordinates ({x}, {y})."
-        else:
-            pyautogui.click(clicks=clicks, button=button)
-            return f"Clicked {button} button."
+        """Click at current or specified coordinate, or double-click"""
+        try:
+            if x is not None and y is not None:
+                pyautogui.click(x=x, y=y, clicks=clicks, button=button)
+                return f"Clicked at coordinates ({x}, {y})."
+            else:
+                pyautogui.click(clicks=clicks, button=button)
+                return f"Clicked {button} button."
+        except Exception as e:
+            return f"Click error: {e}"
+
+    @staticmethod
+    def double_click() -> str:
+        """Double click at current position"""
+        try:
+            pyautogui.doubleClick()
+            return "Double clicked."
+        except Exception as e:
+            return f"Double click error: {e}"
+
+    @staticmethod
+    def right_click() -> str:
+        """Right click at current position"""
+        try:
+            pyautogui.rightClick()
+            return "Right clicked."
+        except Exception as e:
+            return f"Right click error: {e}"
+
+    @staticmethod
+    def scroll(direction: str = "down", amount: int = 5) -> str:
+        """Scroll active window"""
+        try:
+            clicks = -amount if direction == "down" else amount
+            pyautogui.scroll(clicks * 100)
+            return f"Scrolled {direction}."
+        except Exception as e:
+            return f"Scroll error: {e}"
 
     @staticmethod
     def take_screenshot(filename: str = "ruth_screen.png") -> str:

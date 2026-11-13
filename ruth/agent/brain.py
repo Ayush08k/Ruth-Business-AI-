@@ -228,7 +228,7 @@ class RuthCustomBrain:
         import re
 
         # Open application
-        open_match = re.search(r'(?:open|launch|kholo|start)\s+(.+)', text_lower)
+        open_match = re.search(r'(?:open|launch|kholo|start|chalu\s+karo)\s+(.+)', text_lower)
         if open_match:
             app_target = open_match.group(1).replace("please", "").strip()
             # If target looks like a website or web search, route appropriately
@@ -237,12 +237,34 @@ class RuthCustomBrain:
                 return ("_raw", lambda: SystemController.open_url(app_target))
             return ("open_app", {"app_name": app_target})
 
+        # Mouse click commands
+        if any(w in text_lower for w in ["double click", "double-click"]):
+            from ruth.tools.pc_control import SystemController
+            return ("_raw", lambda: SystemController.double_click())
+        if any(w in text_lower for w in ["right click", "right-click"]):
+            from ruth.tools.pc_control import SystemController
+            return ("_raw", lambda: SystemController.right_click())
+        if any(w in text_lower for w in ["click", "click karo", "mouse click"]):
+            # Check for coordinates: e.g. "click at 500 300"
+            coord_match = re.search(r'(\d+)[,\s]+(\d+)', text_lower)
+            if coord_match:
+                return ("click_screen", {"x": int(coord_match.group(1)), "y": int(coord_match.group(2))})
+            return ("click_screen", {})
+
+        # Scrolling
+        if any(w in text_lower for w in ["scroll down", "niche scroll karo", "neeche scroll"]):
+            from ruth.tools.pc_control import SystemController
+            return ("_raw", lambda: SystemController.scroll("down"))
+        if any(w in text_lower for w in ["scroll up", "upar scroll karo"]):
+            from ruth.tools.pc_control import SystemController
+            return ("_raw", lambda: SystemController.scroll("up"))
+
         # Search Web / YouTube
-        yt_search = re.search(r'(?:search\s+on\s+youtube|youtube\s+pe\s+search\s+karo|search\s+youtube\s+for)\s+(.+)', text_lower)
+        yt_search = re.search(r'(?:search\s+on\s+youtube|youtube\s+pe\s+search\s+karo|search\s+youtube\s+for|youtube\s+search)\s+(.+)', text_lower)
         if yt_search:
             return ("search_online", {"query": yt_search.group(1), "platform": "youtube"})
 
-        search_match = re.search(r'(?:search\s+for|google|search\s+on\s+google|search|dhoondo)\s+(.+)', text_lower)
+        search_match = re.search(r'(?:search\s+for|search\s+on\s+google|google\s+pe\s+search|google|search|dhoondo)\s+(.+)', text_lower)
         if search_match:
             return ("search_online", {"query": search_match.group(1), "platform": "google"})
 
