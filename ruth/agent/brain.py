@@ -227,10 +227,39 @@ class RuthCustomBrain:
         text_lower = text.lower().strip()
         import re
 
-        # Open application
+        # Compound commands: e.g. "open chrome and search youtube" / "open browser and search ..."
+        compound = re.search(r'(?:open|launch|kholo)\s+(chrome|crome|crme|browser|edge)\s+(?:and|aur|pe|then)\s+(?:search|dhoondo|type)\s+(.+)', text_lower)
+        if compound:
+            query = compound.group(2).strip()
+            # If query is specifically youtube or a search term
+            if "youtube" in query:
+                clean_q = query.replace("on youtube", "").replace("youtube pe", "").replace("youtube", "").strip()
+                if clean_q:
+                    return ("search_online", {"query": clean_q, "platform": "youtube"})
+                else:
+                    from ruth.tools.pc_control import SystemController
+                    return ("_raw", lambda: SystemController.open_url("https://www.youtube.com"))
+            return ("search_online", {"query": query, "platform": "google"})
+
+        # Search Web / YouTube
+        yt_search = re.search(r'(?:search\s+on\s+youtube|youtube\s+pe\s+search\s+karo|search\s+youtube\s+for|youtube\s+search|search\s+youtube)\s+(.+)', text_lower)
+        if yt_search:
+            return ("search_online", {"query": yt_search.group(1), "platform": "youtube"})
+
+        search_match = re.search(r'(?:search\s+for|search\s+on\s+google|google\s+pe\s+search|google|search|dhoondo)\s+(.+)', text_lower)
+        if search_match:
+            return ("search_online", {"query": search_match.group(1), "platform": "google"})
+
+        # Open application / Website
         open_match = re.search(r'(?:open|launch|kholo|start|chalu\s+karo)\s+(.+)', text_lower)
         if open_match:
             app_target = open_match.group(1).replace("please", "").strip()
+            # Handle phonetic variations of chrome
+            if app_target in ["crme", "chrme", "crome", "crom"]:
+                app_target = "chrome"
+            elif app_target in ["yt", "youtube"]:
+                from ruth.tools.pc_control import SystemController
+                return ("_raw", lambda: SystemController.open_url("https://www.youtube.com"))
             # If target looks like a website or web search, route appropriately
             if "." in app_target and " " not in app_target:
                 from ruth.tools.pc_control import SystemController
@@ -258,15 +287,6 @@ class RuthCustomBrain:
         if any(w in text_lower for w in ["scroll up", "upar scroll karo"]):
             from ruth.tools.pc_control import SystemController
             return ("_raw", lambda: SystemController.scroll("up"))
-
-        # Search Web / YouTube
-        yt_search = re.search(r'(?:search\s+on\s+youtube|youtube\s+pe\s+search\s+karo|search\s+youtube\s+for|youtube\s+search)\s+(.+)', text_lower)
-        if yt_search:
-            return ("search_online", {"query": yt_search.group(1), "platform": "youtube"})
-
-        search_match = re.search(r'(?:search\s+for|search\s+on\s+google|google\s+pe\s+search|google|search|dhoondo)\s+(.+)', text_lower)
-        if search_match:
-            return ("search_online", {"query": search_match.group(1), "platform": "google"})
 
         # Type text
         type_match = re.search(r'(?:type|likho|write)\s+(.+)', text_lower)
